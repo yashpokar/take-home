@@ -15,6 +15,9 @@ import search from './../assets/images/Search Icon.svg';
 import messages from './../assets/images/Path 9.svg';
 import notify from './../assets/images/Notification Icon.svg';
 import avatar from './../assets/images/Avatar.png';
+import avatarOne from './../assets/images/avatar-1.png';
+import avatarSecond from './../assets/images/avatar-2.png';
+import avatarThird from './../assets/images/avatar-3.png';
 
 export default class Home extends Component {
 	render () {
@@ -40,11 +43,53 @@ export default class Home extends Component {
 							<Link className="navigation__widgets-item__link" to="/messages">
 								<img src={ messages } alt="Messages" className="navigation__widgets-item__link-icon"/>
 							</Link>
+
+							<div className="navigation__widgets-item__dropdown">
+								<span className="navigation__widgets-item__dropdown-title">Notifications</span>
+
+								<ul className="navigation__widgets-item__dropdown-menu">
+									<li className="navigation__widgets-item__dropdown-menu__item">
+										<img src={ avatarOne } alt="David Lee" className="navigation__widgets-item__dropdown-menu__item-icon"/>
+
+										<span className="navigation__widgets-item__dropdown-menu__item-message">
+											<span className="navigation__widgets-item__dropdown-menu__item-message__username">David Lee</span> sent you a message.
+										</span>
+
+										<span className="navigation__widgets-item__dropdown-menu__item-time">4 min ago</span>
+									</li>
+
+									<li className="navigation__widgets-item__dropdown-menu__item">
+										<img src={ avatarSecond } alt="David Lee" className="navigation__widgets-item__dropdown-menu__item-icon"/>
+
+										<span className="navigation__widgets-item__dropdown-menu__item-message">
+											<span className="navigation__widgets-item__dropdown-menu__item-message__username">David Lee</span> sent you a message.
+										</span>
+
+										<span className="navigation__widgets-item__dropdown-menu__item-time">4 min ago</span>
+									</li>
+
+									<li className="navigation__widgets-item__dropdown-menu__item">
+										<img src={ avatarThird } alt="David Lee" className="navigation__widgets-item__dropdown-menu__item-icon"/>
+
+										<span className="navigation__widgets-item__dropdown-menu__item-message">
+											<span className="navigation__widgets-item__dropdown-menu__item-message__username">David Lee</span> sent you a message.
+										</span>
+
+										<span className="navigation__widgets-item__dropdown-menu__item-time">4 min ago</span>
+									</li>
+								</ul>
+
+								<Link className="navigation__widgets-item__dropdown-footer" to="/notifications">
+									View all notifications
+								</Link>
+							</div>
 						</li>
 
 						<li className="navigation__widgets-item">
 							<Link className="navigation__widgets-item__link" to="/notifications">
 								<img src={ notify } alt="Notification" className="navigation__widgets-item__link-icon"/>
+
+								<span className="badge badge--orange" />
 							</Link>
 						</li>
 
