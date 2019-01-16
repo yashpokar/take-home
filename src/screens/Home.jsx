@@ -118,7 +118,45 @@ export default class Home extends Component {
 				</Sidebar>
 
 				<section className="content">
-					content here
+					<span id="page-title">Overview</span>
+
+					<div className="columns">
+						<div className="overview-box column box-shadow bg-white">
+							<span className="overview-box__title">Total Views</span>
+
+							<span className="overview-box__stat">
+								246K
+
+								<small className="overview-box__stat-in-percent is-moving-down">↓ 13.8%</small>
+							</span>
+						</div>
+
+						<div className="overview-box column box-shadow bg-white">
+							<span className="overview-box__title">Products Sold</span>
+
+							<span className="overview-box__stat">
+								756
+
+								<small className="overview-box__stat-in-percent is-moving-up">↑ 13.8%</small>
+							</span>
+						</div>
+
+						<div className="overview-box column box-shadow bg-white">
+							<span className="overview-box__title">Total Earnings</span>
+
+							<span className="overview-box__stat">
+								$35K
+
+								<small className="overview-box__stat-in-percent is-moving-down">↓ 13.8%</small>
+							</span>
+						</div>
+					</div>
+
+					<div className="columns">
+						<div className="column bg-white box-shadow">
+
+						</div>
+					</div>
 				</section>
 			</div>
 		)
