@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Sidebar, SidebarItem } from './../components/layouts/Sidebar';
+import { OverviewBoxes, OverviewBox } from './../components/dashboard/OverviewBox';
 
 import home from './../assets/images/house.svg';
 import calender from './../assets/images/Calendar.svg';
@@ -20,9 +21,27 @@ import avatarSecond from './../assets/images/avatar-2.png';
 import avatarThird from './../assets/images/avatar-3.png';
 
 export default class Home extends Component {
+	state = {
+		notifications: [
+			{ image: avatarOne, name: 'David Lee', when: '4 mins ago' },
+			{ image: avatarSecond, name: 'Alex Jhonshon', when: '4 mins ago' },
+			{ image: avatarThird, name: 'Robert Grant', when: '4 mins ago' },
+		],
+		isNotificationOpen: false
+	}
+
+	closeAllThePopovers = e => {
+		// close notification bar
+		if (! this.refs.notificationMenu.contains(e.target)) {
+			this.setState({ isNotificationOpen: false });
+		}
+	}
+
 	render () {
+		const { notifications, isNotificationOpen } = this.state;
+
 		return (
-			<div className="container">
+			<div className="container" onClick={ this.closeAllThePopovers }>
 				<nav className="navigation">
 					<Link className="navigation__title" to='/'>IMPEKABLE</Link>
 
@@ -43,54 +62,55 @@ export default class Home extends Component {
 							<Link className="navigation__widgets-item__link" to="/messages">
 								<img src={ messages } alt="Messages" className="navigation__widgets-item__link-icon"/>
 							</Link>
-
-							<div className="navigation__widgets-item__dropdown">
-								<span className="navigation__widgets-item__dropdown-title">Notifications</span>
-
-								<ul className="navigation__widgets-item__dropdown-menu">
-									<li className="navigation__widgets-item__dropdown-menu__item">
-										<img src={ avatarOne } alt="David Lee" className="navigation__widgets-item__dropdown-menu__item-icon"/>
-
-										<span className="navigation__widgets-item__dropdown-menu__item-message">
-											<span className="navigation__widgets-item__dropdown-menu__item-message__username">David Lee</span> sent you a message.
-										</span>
-
-										<span className="navigation__widgets-item__dropdown-menu__item-time">4 min ago</span>
-									</li>
-
-									<li className="navigation__widgets-item__dropdown-menu__item">
-										<img src={ avatarSecond } alt="David Lee" className="navigation__widgets-item__dropdown-menu__item-icon"/>
-
-										<span className="navigation__widgets-item__dropdown-menu__item-message">
-											<span className="navigation__widgets-item__dropdown-menu__item-message__username">David Lee</span> sent you a message.
-										</span>
-
-										<span className="navigation__widgets-item__dropdown-menu__item-time">4 min ago</span>
-									</li>
-
-									<li className="navigation__widgets-item__dropdown-menu__item">
-										<img src={ avatarThird } alt="David Lee" className="navigation__widgets-item__dropdown-menu__item-icon"/>
-
-										<span className="navigation__widgets-item__dropdown-menu__item-message">
-											<span className="navigation__widgets-item__dropdown-menu__item-message__username">David Lee</span> sent you a message.
-										</span>
-
-										<span className="navigation__widgets-item__dropdown-menu__item-time">4 min ago</span>
-									</li>
-								</ul>
-
-								<Link className="navigation__widgets-item__dropdown-footer" to="/notifications">
-									View all notifications
-								</Link>
-							</div>
 						</li>
 
-						<li className="navigation__widgets-item">
-							<Link className="navigation__widgets-item__link" to="/notifications">
-								<img src={ notify } alt="Notification" className="navigation__widgets-item__link-icon"/>
+						<li className="navigation__widgets-item" ref="notificationMenu">
+							<Link
+								className="navigation__widgets-item__link"
+								to="/notifications"
+								onClick={ () => this.setState({ isNotificationOpen: ! isNotificationOpen }) }>
+								<img
+									src={ notify }
+									alt="Notification"
+									className="navigation__widgets-item__link-icon"
+								/>
 
 								<span className="badge badge--orange" />
 							</Link>
+
+							{
+								notifications.length ?
+								<div className={ `navigation__widgets-item__dropdown${ isNotificationOpen ? ' is-active' : '' }` }>
+									<span className="navigation__widgets-item__dropdown-title">Notifications</span>
+
+									<ul className="navigation__widgets-item__dropdown-menu">
+										{
+											notifications.map((notification, i) => (
+												<li className="navigation__widgets-item__dropdown-menu__item" key={i}>
+													<img
+														src={ notification.image }
+														alt={ notification.name }
+														className="navigation__widgets-item__dropdown-menu__item-icon"/>
+
+													<span className="navigation__widgets-item__dropdown-menu__item-message">
+														<span className="navigation__widgets-item__dropdown-menu__item-message__username">
+															{ notifications.name }
+														</span> sent you a message.
+													</span>
+
+													<span className="navigation__widgets-item__dropdown-menu__item-time">{ notification.when }</span>
+												</li>
+											))
+										}
+
+									</ul>
+
+									<Link className="navigation__widgets-item__dropdown-footer" to="/notifications">
+										View all notifications
+									</Link>
+								</div>
+								: null
+							}
 						</li>
 
 						<span className="navigation__widgets--divider" />
@@ -120,37 +140,11 @@ export default class Home extends Component {
 				<section className="content">
 					<span id="page-title">Overview</span>
 
-					<div className="columns">
-						<div className="overview-box column box-shadow bg-white">
-							<span className="overview-box__title">Total Views</span>
-
-							<span className="overview-box__stat">
-								246K
-
-								<small className="overview-box__stat-in-percent is-moving-down">↓ 13.8%</small>
-							</span>
-						</div>
-
-						<div className="overview-box column box-shadow bg-white">
-							<span className="overview-box__title">Products Sold</span>
-
-							<span className="overview-box__stat">
-								756
-
-								<small className="overview-box__stat-in-percent is-moving-up">↑ 13.8%</small>
-							</span>
-						</div>
-
-						<div className="overview-box column box-shadow bg-white">
-							<span className="overview-box__title">Total Earnings</span>
-
-							<span className="overview-box__stat">
-								$35K
-
-								<small className="overview-box__stat-in-percent is-moving-down">↓ 13.8%</small>
-							</span>
-						</div>
-					</div>
+					<OverviewBoxes>
+						<OverviewBox title="Total Views" stat="246K" percent="13.8" movingUp />
+						<OverviewBox title="Products Sold" stat="756" percent="13.8" />
+						<OverviewBox title="Total Earnings" stat="$36K" percent="13.8" movingUp />
+					</OverviewBoxes>
 
 					<div className="columns">
 						<div className="column bg-white box-shadow">
