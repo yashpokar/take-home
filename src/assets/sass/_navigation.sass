@@ -3,15 +3,98 @@
 	background-color: $navigation-bg-color
 	box-shadow: $default-shadow
 
+	&__title,
+	&__search,
+	&__widgets
+		line-height: $navigation-height
+		height: $navigation-height
+		display: block
+		float: left
+
 	&__title
 		background-color: $navigation-title-bg-color
 		color: $navigation-title-color
-		height: $navigation-height
-		line-height: $navigation-height
 		width: $sidebar-width
 		padding-left: 20px
 		text-decoration: none
 		letter-spacing: 2.6px
 		font-size: 15px
 		font-weight: 900
-		display: block
+
+	&__search
+
+		&-icon
+			height: $navigation-height
+			line-height: $navigation-height
+			margin-left: 20px
+
+		&-box
+			min-width: 320px
+			padding: 10px
+			border: none
+			font-size: 15px
+
+			&::placeholder
+				color: $primary-color
+				font-size: 15px
+
+			&::-webkit-input-placeholder
+				color: $primary-color
+				font-size: 15px
+
+			&::-ms-input-placeholder
+				color: $primary-color
+				font-size: 15px
+
+			&::-moz-placeholder
+				color: $primary-color
+				font-size: 15px
+
+			&:focus
+				outline: none
+
+	&__widgets
+		float: right
+		display: -webkit-flex
+		display: -moz-flex
+		display: -ms-flex
+		display: -o-flex
+		display: flex
+		align-items: center
+
+		&--divider::after
+			content: ""
+			height: 28px
+			border-right: 1px solid #eee
+			display: block
+			margin-right: 10px
+
+		&-item
+			margin: 0 10px
+
+			&__link
+				text-decoration: none
+
+				&-icon
+					display: block
+					width: 36px
+					height: 36px
+					padding: 10px
+
+			&--profile
+
+				.navigation__widgets-item__link
+					display: -webkit-flex
+					display: -moz-flex
+					display: -ms-flex
+					display: -o-flex
+					display: flex
+
+					&-icon
+						width: 58px
+						height: 58px
+
+					&-username
+						line-height: 60px
+						font-size: 15px
+						margin-right: 10px

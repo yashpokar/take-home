@@ -2,5 +2,31 @@ body, html
 	color: $primary-color
 	background-color: $body-bg-color
 
-.sidebar__menu
+div,
+aside,
+ul,
+li,
+section
+	display: block
+	-o-display: block
+	-moz-display: block
+	-webkit-display: block
+
+.sidebar__menu,
+.navigation__widgets
 	list-style-type: none
+
+.sidebar__menu-item__link-icon,
+.navigation__search-icon,
+	width: 16px
+	height: 16px
+	display: block
+	float: left
+
+.navigation,
+.navigation__widgets
+
+	&::after
+		content: ""
+		display: table
+		clear: both

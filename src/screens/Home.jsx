@@ -11,10 +11,10 @@ import chart from './../assets/images/chart-bar-32.svg';
 import chat from './../assets/images/chat-46.svg';
 import receipt from './../assets/images/receipt-list-42.svg';
 import single from './../assets/images/single-02.svg';
-// import messages from './../assets/images/Path 9.svg';
-// import avatar from './../assets/images/Avatar.png';
-// import notify from './../assets/images/Notification Icon.svg';
-// import search from './../assets/images/Search Icon.svg';
+import search from './../assets/images/Search Icon.svg';
+import messages from './../assets/images/Path 9.svg';
+import notify from './../assets/images/Notification Icon.svg';
+import avatar from './../assets/images/Avatar.png';
 
 export default class Home extends Component {
 	render () {
@@ -22,6 +22,42 @@ export default class Home extends Component {
 			<div className="container">
 				<nav className="navigation">
 					<Link className="navigation__title" to='/'>IMPEKABLE</Link>
+
+					<div className="navigation__search">
+						<img src={ search } alt="Search" className="navigation__search-icon"/>
+
+						<input type="text" className="navigation__search-box" placeholder="Search transactions, invoices or help" />
+					</div>
+
+					<ul className="navigation__widgets">
+						<li className="navigation__widgets-item">
+							<Link className="navigation__widgets-item__link" to="/support">
+								<img src={ support } alt="Help" className="navigation__widgets-item__link-icon"/>
+							</Link>
+						</li>
+
+						<li className="navigation__widgets-item">
+							<Link className="navigation__widgets-item__link" to="/messages">
+								<img src={ messages } alt="Messages" className="navigation__widgets-item__link-icon"/>
+							</Link>
+						</li>
+
+						<li className="navigation__widgets-item">
+							<Link className="navigation__widgets-item__link" to="/notifications">
+								<img src={ notify } alt="Notification" className="navigation__widgets-item__link-icon"/>
+							</Link>
+						</li>
+
+						<span className="navigation__widgets--divider" />
+
+						<li className="navigation__widgets-item navigation__widgets-item--profile">
+							<Link className="navigation__widgets-item__link" to="/profile">
+								<span className="navigation__widgets-item__link-username">Jhon Doe</span>
+
+								<img src={ avatar } alt="Jhon Doe" className="navigation__widgets-item__link-icon"/>
+							</Link>
+						</li>
+					</ul>
 				</nav>
 
 				<Sidebar>
@@ -35,6 +71,10 @@ export default class Home extends Component {
 					<SidebarItem icon={calender} name="Calender" href="/calender" />
 					<SidebarItem icon={support} name="Help Center" href="/support" />
 				</Sidebar>
+
+				<section className="content">
+					content here
+				</section>
 			</div>
 		)
 	}
