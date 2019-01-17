@@ -26,7 +26,21 @@ class Table extends React.Component {
 					{
 						this.props.rows.map((row, i) => (
 							<tr key={i}>
-								{ columns.map((column, j) => <td key={j}>{ row[column.props.name] }</td>) }
+								{
+									columns.map((column, j) => {
+										if (column.props.cell) {
+											return (
+												<React.Fragment key={j}>
+													{column.props.cell(row[column.props.name])}
+												</React.Fragment>
+											);
+										}
+
+										return (
+											<td key={j}>{ row[column.props.name] }</td>
+										)
+									})
+								}
 							</tr>
 						))
 					}

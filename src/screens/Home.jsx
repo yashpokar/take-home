@@ -69,7 +69,41 @@ export default class Home extends Component {
 				conversion: '45%',
 				total: '$78.485',
 			},
-		]
+		],
+		topProducts: [
+			{
+				product: {
+					image: 'http://ecx.images-amazon.com/images/I/41SB89Ne2tL._SS40_.jpg',
+					name: 'Women’s Vintage Peacoat',
+				},
+				availability: 320,
+				total: '$29,192',
+			},
+			{
+				product: {
+					image: 'http://ecx.images-amazon.com/images/I/41SB89Ne2tL._SS40_.jpg',
+					name: 'Women’s Vintage Peacoat',
+				},
+				availability: 320,
+				total: '$29,192',
+			},
+			{
+				product: {
+					image: 'http://ecx.images-amazon.com/images/I/41SB89Ne2tL._SS40_.jpg',
+					name: 'Women’s Vintage Peacoat',
+				},
+				availability: 0,
+				total: '$29,192',
+			},
+			{
+				product: {
+					image: 'http://ecx.images-amazon.com/images/I/41SB89Ne2tL._SS40_.jpg',
+					name: 'Women’s Vintage Peacoat',
+				},
+				availability: 3,
+				total: '$29,192',
+			},
+		],
 	}
 
 	garphOptions = [
@@ -222,7 +256,7 @@ export default class Home extends Component {
 									<Column name="location" />
 									<Column name="views" />
 									<Column name="sales" />
-									<Column name="conversation" />
+									<Column name="conversion" />
 									<Column name="total" />
 								</Table>
 							</div>
@@ -251,7 +285,28 @@ export default class Home extends Component {
 							<span className="dashboard-card-title">Top Products</span>
 
 							<div className="dashboard-card-content">
+								<Table rows={this.state.topProducts}>
+									<Column
+										name="product"
+										cell={ product =>
+											<td>
+												<div className="flex middle">
+													<img src={ product.image } alt={ product.name } className="border" />
 
+													<span className="block ml-10">{ product.name }</span>
+												</div>
+											</td>
+										} />
+									<Column name="availability" cell={
+										availability =>
+										<td>
+											<span className={ `chip chip--${ ! availability ? 'red' : availability > 10 ? 'green' : 'orange' }` }>
+												{ availability ? `${availability} in Stock` : 'Out of Stock' }
+											</span>
+										</td>
+									} />
+									<Column name="total" />
+								</Table>
 							</div>
 						</div>
 					</div>
