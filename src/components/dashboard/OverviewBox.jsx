@@ -17,6 +17,10 @@ const OverviewBox = props => (
 				{ ! props.movingUp ? '↓' : '↑' } {props.percent}%
 			</small>
 		</span>
+
+		<div className="overview-box__chart">
+			Chart here
+		</div>
 	</div>
 );
 

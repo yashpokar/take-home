@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Sidebar, SidebarItem } from './../components/layouts/Sidebar';
+import { Table, Column } from './../components/layouts/Table';
 import { OverviewBoxes, OverviewBox } from './../components/dashboard/OverviewBox';
+import { Country, Countries } from './../components/dashboard/Map';
+import Select from './../components/form/Select';
 
+import MapImage from './../assets/images/Map.svg';
 import home from './../assets/images/house.svg';
 import calender from './../assets/images/Calendar.svg';
 import product from './../assets/images/barcode.svg';
@@ -27,8 +31,54 @@ export default class Home extends Component {
 			{ image: avatarSecond, name: 'Alex Jhonshon', when: '4 mins ago' },
 			{ image: avatarThird, name: 'Robert Grant', when: '4 mins ago' },
 		],
-		isNotificationOpen: false
+		isNotificationOpen: false,
+		garphOption: 1,
+		referrerData: [
+			{
+				location: 'adobe.com',
+				views: 3648,
+				sales: '4890',
+				conversion: '45%',
+				total: '$78.485',
+			},
+			{
+				location: 'adobe.com',
+				views: 3648,
+				sales: '4890',
+				conversion: '45%',
+				total: '$78.485',
+			},
+			{
+				location: 'adobe.com',
+				views: 3648,
+				sales: '4890',
+				conversion: '45%',
+				total: '$78.485',
+			},
+			{
+				location: 'adobe.com',
+				views: 3648,
+				sales: '4890',
+				conversion: '45%',
+				total: '$78.485',
+			},
+			{
+				location: 'adobe.com',
+				views: 3648,
+				sales: '4890',
+				conversion: '45%',
+				total: '$78.485',
+			},
+		]
 	}
+
+	garphOptions = [
+		'Last 3 months',
+		'Last 6 months',
+		'Last 8 months',
+		'Last 12 months',
+		'Last 2 years',
+	]
 
 	closeAllThePopovers = e => {
 		// close notification bar
@@ -94,7 +144,7 @@ export default class Home extends Component {
 
 													<span className="navigation__widgets-item__dropdown-menu__item-message">
 														<span className="navigation__widgets-item__dropdown-menu__item-message__username">
-															{ notifications.name }
+															{ notification.name }
 														</span> sent you a message.
 													</span>
 
@@ -117,7 +167,11 @@ export default class Home extends Component {
 
 						<li className="navigation__widgets-item navigation__widgets-item--profile">
 							<Link className="navigation__widgets-item__link" to="/profile">
-								<span className="navigation__widgets-item__link-username">Jhon Doe</span>
+								<span className="navigation__widgets-item__link-username">
+									Jhon Doe
+
+									<i className="caret caret--down ml-10"></i>
+								</span>
 
 								<img src={ avatar } alt="Jhon Doe" className="navigation__widgets-item__link-icon"/>
 							</Link>
@@ -147,8 +201,58 @@ export default class Home extends Component {
 					</OverviewBoxes>
 
 					<div className="columns">
-						<div className="column bg-white box-shadow">
+						<div className="column clearfix bg-white box-shadow">
+							<span className="dashboard-card-title">Statistics</span>
 
+							<div className="float-right">
+								<Select
+									onChange={ (garphOption) => this.setState({ garphOption }) }
+									options={this.garphOptions}
+									selected={this.state.garphOption} />
+							</div>
+						</div>
+					</div>
+
+					<div className="columns">
+						<div className="column bg-white box-shadow">
+							<span className="dashboard-card-title">Referrer</span>
+
+							<div className="dashboard-card-content">
+								<Table rows={this.state.referrerData} hasMore>
+									<Column name="location" />
+									<Column name="views" />
+									<Column name="sales" />
+									<Column name="conversation" />
+									<Column name="total" />
+								</Table>
+							</div>
+						</div>
+
+						<div className="column column--quarter bg-white box-shadow">
+							<span className="dashboard-card-title">Details on Map</span>
+
+							<span className="dashboard-card-subtitle float-right">Show All List</span>
+
+							<img src={ MapImage } alt="Map" className="map" />
+
+							<Countries>
+								<Country name="Canada" revenue="$379.54" color="purple" />
+								<Country name="Brazil" revenue="$379.54" color="green" />
+								<Country name="Egypt" revenue="$379.54" color="orange" />
+								<Country name="Russia" revenue="$379.54" color="pink" />
+								<Country name="China" revenue="$379.54" color="green" />
+								<Country name="Australia" revenue="$379.54" color="red" />
+							</Countries>
+						</div>
+					</div>
+
+					<div className="columns">
+						<div className="column bg-white box-shadow">
+							<span className="dashboard-card-title">Top Products</span>
+
+							<div className="dashboard-card-content">
+
+							</div>
 						</div>
 					</div>
 				</section>

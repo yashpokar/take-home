@@ -1,0 +1,50 @@
+.options
+	border: 1px solid #D7DAE2
+	box-shadow: 0 2px 3px rgba(0, 0, 0, .075)
+	border-radius: 4px
+	position: relative
+	cursor: pointer
+	z-index: 799
+
+	&::after
+		position: absolute
+		right: 10px
+		top: 10px
+		content: ""
+		border: solid #A4AFB7
+		border-width: 0 2px 2px 0
+		display: inline-block
+		padding: 3px
+		margin-bottom: 2px
+		border-radius: 2px
+		display: inline-block
+		transform: rotate(45deg)
+		-o-transform: rotate(45deg)
+		-moz-transform: rotate(45deg)
+		-webkit-transform: rotate(45deg)
+
+	&.is-active
+
+		&::after
+			transform: rotate(-135deg)
+			-o-transform: rotate(-135deg)
+			-moz-transform: rotate(-135deg)
+			-webkit-transform: rotate(-135deg)
+
+		.option
+			display: block
+
+			&.is-selected
+				background-color: rgba(0, 0, 0, .045)
+
+.option
+	padding: 5px 25px 5px 15px
+	display: none
+	color: #4D4F5C
+	border-top: 1px solid #eee
+
+	&:first-child
+		border-top: none
+
+	&.is-selected
+		display: block
