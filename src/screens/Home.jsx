@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Line } from 'react-chartjs-2';
 
 import { Sidebar, SidebarItem } from './../components/layouts/Sidebar';
 import { Table, Column } from './../components/layouts/Table';
@@ -29,13 +30,13 @@ export default class Home extends Component {
 	state = {
 		notifications: [],
 		isNotificationOpen: false,
-		garphOption: 1,
+		garphOption: 'Last 6 months',
 		referrerData: [],
 		topProducts: [],
 		quickDetails: [],
-		totalViews: { value: '', percent: '', movingUp: false },
-		productsSold: { value: '', percent: '', movingUp: true },
-		totalEarnings: { value: '', percent: '', movingUp: false },
+		totalViews: { value: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: false },
+		productsSold: { value: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: true },
+		totalEarnings: { value: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: false },
 	}
 
 	sidebarItems = [
@@ -65,7 +66,7 @@ export default class Home extends Component {
 
 				this.setState({ topProducts, referrerData: referrer, notifications, quickDetails, ...cards });
 			})
-			.catch(error => console.log(error))
+			.catch(error => console.log(error));
 	}
 
 	closeAllThePopovers = e => {
@@ -118,7 +119,7 @@ export default class Home extends Component {
 
 							{
 								notifications.length ?
-								<div className={ `navigation__widgets-item__dropdown animated${ isNotificationOpen ? ' is-active flipInY' : ' flipOutY' }` }>
+								<div className={ `navigation__widgets-item__dropdown animated${ isNotificationOpen ? ' is-active flipInY' : '' }` }>
 									<span className="navigation__widgets-item__dropdown-title">Notifications</span>
 
 									<ul className="navigation__widgets-item__dropdown-menu">
@@ -183,16 +184,19 @@ export default class Home extends Component {
 							title="Total Views"
 							stat={ this.state.totalViews.value }
 							percent={ this.state.totalViews.percent }
+							data={ this.state.totalViews.data }
 							movingUp={ this.state.totalViews.movingUp === true } />
 						<OverviewBox
 							title="Products Sold"
 							stat={ this.state.productsSold.value }
 							percent={ this.state.productsSold.percent }
+							data={ this.state.productsSold.data }
 							movingUp={ this.state.productsSold.movingUp === true } />
 						<OverviewBox
 							title="Total Earnings"
 							stat={ this.state.totalEarnings.value }
 							percent={ this.state.totalEarnings.percent }
+							data={ this.state.totalEarnings.data }
 							movingUp={ this.state.totalEarnings.movingUp === true } />
 					</OverviewBoxes>
 
@@ -204,10 +208,89 @@ export default class Home extends Component {
 								<Select
 									onChange={ (garphOption) => this.setState({ garphOption }) }
 									options={this.garphOptions}
-									selected={this.state.garphOption} />
+									defaultValue={this.state.garphOption} />
 							</div>
 
-							<canvas width="100%" height="280px" className="float-right" />
+							<div className="dashboard-card-content" id="statistics-chart-container">
+								<Line
+									height={60}
+									datasetKeyProvider={ ({index}) => index }
+									data={{
+										labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+									  	datasets: [
+										    {
+												fill: true,
+												backgroundColor: 'rgba(93, 217, 253, 0.4)',
+												borderColor: 'rgba(93, 217, 253, 1)',
+												borderCapStyle: 'butt',
+												borderDash: [],
+												borderDashOffset: 0.0,
+												borderJoinStyle: 'miter',
+												pointBorderColor: 'rgba(75,192,192,1)',
+												pointBackgroundColor: '#fff',
+												pointBorderWidth: 1,
+												pointHoverRadius: 5,
+												pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+												pointHoverBorderColor: 'rgba(220,220,220,1)',
+												pointHoverBorderWidth: 2,
+												pointRadius: 1,
+												pointHitRadius: 10,
+												data: [15, 9, 13, 18, 14, 23],
+												index: 0,
+											},
+										    {
+												fill: true,
+												backgroundColor: 'rgba(168, 165, 251, 0.4)',
+												borderColor: 'rgba(168, 165, 251, 1)',
+												borderCapStyle: 'butt',
+												borderDash: [],
+												borderDashOffset: 0.0,
+												borderJoinStyle: 'miter',
+												pointBorderColor: 'rgba(75,192,192,1)',
+												pointBackgroundColor: '#fff',
+												pointBorderWidth: 1,
+												pointHoverRadius: 5,
+												pointHoverBackgroundColor: 'rgba(168, 165, 251, 1)',
+												pointHoverBorderColor: 'rgba(220,220,220,1)',
+												pointHoverBorderWidth: 2,
+												pointRadius: 1,
+												pointHitRadius: 10,
+												data: [19, 6, 17, 13, 16, 10],
+												index: 1,
+											},
+										]
+									}}
+									options={{
+										legend: false,
+										scales: {
+									        xAxes: [{
+									        	gridLines: {
+									        		color: '#eee'
+									        	},
+									        	ticks: {
+									        		fontColor: 'rgba(67, 66, 93, .5)',
+									        		fontSize: 11,
+									        		fontFamily: 'Source Sans Pro',
+									        	}
+									        }],
+									        yAxes: [{
+									        	gridLines: {
+									        		color: '#eee'
+									        	},
+									        	ticks: {
+									        		fontColor: 'rgba(67, 66, 93, .5)',
+									        		fontSize: 11,
+									        		fontFamily: 'Source Sans Pro',
+									        		min: 5,
+									        		max: 25,
+									        		stepSize: 5,
+									        		callback: (label, index, labels) => `${label}k`,
+									        	}
+									        }]
+									    }
+									}}
+								/>
+							</div>
 						</div>
 					</div>
 

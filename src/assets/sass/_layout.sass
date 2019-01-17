@@ -7,6 +7,19 @@
 	overflow-y: scroll
 	height: calc(100% - 40px)
 
+	&::-webkit-scrollbar
+		width: 4px
+
+	&::-webkit-scrollbar-track
+		background: transparent
+
+	&::-webkit-scrollbar-thumb
+		background-color: $primary-color
+		border-radius: 5px
+
+	&::-webkit-scrollbar-thumb
+		background-color: #34495e
+
 	&:empty
 		height: 100%
 
