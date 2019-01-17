@@ -139,7 +139,7 @@ export default class Home extends Component {
 														</span> sent you a message.
 													</span>
 
-													<span className="navigation__widgets-item__dropdown-menu__item-time">{ notification.when }</span>
+													<span className="navigation__widgets-item__dropdown-menu__item-time">{ notification.on }</span>
 												</li>
 											))
 										}
