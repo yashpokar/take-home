@@ -209,6 +209,8 @@ export default class Home extends Component {
 									options={this.garphOptions}
 									selected={this.state.garphOption} />
 							</div>
+
+							<canvas width="100%" height="280px" />
 						</div>
 					</div>
 
