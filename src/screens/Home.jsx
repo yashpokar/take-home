@@ -8,6 +8,8 @@ import { Country, Countries } from './../components/dashboard/Map';
 import Select from './../components/form/Select';
 import QuickDetail from './../components/dashboard/QuickDetail';
 
+import axios from 'axios';
+
 import MapImage from './../assets/images/Map.svg';
 import home from './../assets/images/house.svg';
 import calender from './../assets/images/Calendar.svg';
@@ -21,9 +23,6 @@ import search from './../assets/images/Search Icon.svg';
 import messages from './../assets/images/Path 9.svg';
 import notify from './../assets/images/Notification Icon.svg';
 import avatar from './../assets/images/Avatar.png';
-import avatarOne from './../assets/images/avatar-1.png';
-import avatarSecond from './../assets/images/avatar-2.png';
-import avatarThird from './../assets/images/avatar-3.png';
 import remove from './../assets/images/circle-remove.svg';
 import time from './../assets/images/time-countdown.svg';
 import process_ from './../assets/images/Process.svg';
@@ -32,85 +31,27 @@ import newUserIcon from './../assets/images/New customer Icon.svg';
 
 export default class Home extends Component {
 	state = {
-		notifications: [
-			{ image: avatarOne, name: 'David Lee', when: '4 mins ago' },
-			{ image: avatarSecond, name: 'Alex Jhonshon', when: '4 mins ago' },
-			{ image: avatarThird, name: 'Robert Grant', when: '4 mins ago' },
-		],
+		notifications: [],
 		isNotificationOpen: false,
 		garphOption: 1,
-		referrerData: [
-			{
-				location: 'adobe.com',
-				views: 3648,
-				sales: '4890',
-				conversion: '45%',
-				total: '$78.485',
-			},
-			{
-				location: 'adobe.com',
-				views: 3648,
-				sales: '4890',
-				conversion: '45%',
-				total: '$78.485',
-			},
-			{
-				location: 'adobe.com',
-				views: 3648,
-				sales: '4890',
-				conversion: '45%',
-				total: '$78.485',
-			},
-			{
-				location: 'adobe.com',
-				views: 3648,
-				sales: '4890',
-				conversion: '45%',
-				total: '$78.485',
-			},
-			{
-				location: 'adobe.com',
-				views: 3648,
-				sales: '4890',
-				conversion: '45%',
-				total: '$78.485',
-			},
-		],
-		topProducts: [
-			{
-				product: {
-					image: 'http://ecx.images-amazon.com/images/I/41SB89Ne2tL._SS40_.jpg',
-					name: 'Women’s Vintage Peacoat',
-				},
-				availability: 320,
-				total: '$29,192',
-			},
-			{
-				product: {
-					image: 'http://ecx.images-amazon.com/images/I/41SB89Ne2tL._SS40_.jpg',
-					name: 'Women’s Vintage Peacoat',
-				},
-				availability: 320,
-				total: '$29,192',
-			},
-			{
-				product: {
-					image: 'http://ecx.images-amazon.com/images/I/41SB89Ne2tL._SS40_.jpg',
-					name: 'Women’s Vintage Peacoat',
-				},
-				availability: 0,
-				total: '$29,192',
-			},
-			{
-				product: {
-					image: 'http://ecx.images-amazon.com/images/I/41SB89Ne2tL._SS40_.jpg',
-					name: 'Women’s Vintage Peacoat',
-				},
-				availability: 3,
-				total: '$29,192',
-			},
-		],
+		referrerData: [],
+		topProducts: [],
+		totalViews: { value: '', percent: '', movingUp: false },
+		productsSold: { value: '', percent: '', movingUp: true },
+		totalEarnings: { value: '', percent: '', movingUp: false },
 	}
+
+	sidebarItems = [
+		{ icon: home, name: 'Home', href: '/', isActive: true },
+		{ icon: chart, name: 'Dashboard', href: '/dashboard' },
+		{ icon: receipt, name: 'Invoices', href: '/invoices' },
+		{ icon: home, name: 'Inbox', href: '/inbox' },
+		{ icon: product, name: 'Products', href: '/products' },
+		{ icon: single, name: 'Customers', href: '/customers' },
+		{ icon: chat, name: 'Chat Room', href: '/chat' },
+		{ icon: calender, name: 'Calender', href: '/calender' },
+		{ icon: support, name: 'Help Center', href: '/support' },
+	]
 
 	garphOptions = [
 		'Last 3 months',
@@ -119,6 +60,16 @@ export default class Home extends Component {
 		'Last 12 months',
 		'Last 2 years',
 	]
+
+	componentDidMount () {
+		axios.get('https://take-home-rest.herokuapp.com/')
+			.then(({data}) => {
+				const { topProducts, referrer, cards, notifications } = data;
+
+				this.setState({ topProducts, referrerData: referrer, notifications, ...cards });
+			})
+			.catch(error => console.log(error))
+	}
 
 	closeAllThePopovers = e => {
 		// close notification bar
@@ -178,13 +129,13 @@ export default class Home extends Component {
 											notifications.map((notification, i) => (
 												<li className="navigation__widgets-item__dropdown-menu__item" key={i}>
 													<img
-														src={ notification.image }
-														alt={ notification.name }
+														src={ notification.user.avatar }
+														alt={ notification.user.name }
 														className="navigation__widgets-item__dropdown-menu__item-icon"/>
 
 													<span className="navigation__widgets-item__dropdown-menu__item-message">
 														<span className="navigation__widgets-item__dropdown-menu__item-message__username">
-															{ notification.name }
+															{ notification.user.name }
 														</span> sent you a message.
 													</span>
 
@@ -220,24 +171,32 @@ export default class Home extends Component {
 				</nav>
 
 				<Sidebar>
-					<SidebarItem icon={home} name="Home" href="/" />
-					<SidebarItem icon={chart} name="Dashboard" href="/dashboard" />
-					<SidebarItem icon={receipt} name="Invoices" href="/invoices" isActive />
-					<SidebarItem icon={home} name="Inbox" href="/inbox" />
-					<SidebarItem icon={product} name="Products" href="/products" />
-					<SidebarItem icon={single} name="Customers" href="/customers" />
-					<SidebarItem icon={chat} name="Chat Room" href="/chat" />
-					<SidebarItem icon={calender} name="Calender" href="/calender" />
-					<SidebarItem icon={support} name="Help Center" href="/support" />
+					{
+						this.sidebarItems.map((sidebarItem, i) => (
+							<SidebarItem {...sidebarItem} isActive={ this.props.location.pathname === sidebarItem.href } key={i} />
+						))
+					}
 				</Sidebar>
 
 				<section className="content">
 					<span id="page-title">Overview</span>
 
 					<OverviewBoxes>
-						<OverviewBox title="Total Views" stat="246K" percent="13.8" movingUp />
-						<OverviewBox title="Products Sold" stat="756" percent="13.8" />
-						<OverviewBox title="Total Earnings" stat="$36K" percent="13.8" movingUp />
+						<OverviewBox
+							title="Total Views"
+							stat={ this.state.totalViews.value }
+							percent={ this.state.totalViews.percent }
+							movingUp={ this.state.totalViews.movingUp === true } />
+						<OverviewBox
+							title="Products Sold"
+							stat={ this.state.productsSold.value }
+							percent={ this.state.productsSold.percent }
+							movingUp={ this.state.productsSold.movingUp === true } />
+						<OverviewBox
+							title="Total Earnings"
+							stat={ this.state.totalEarnings.value }
+							percent={ this.state.totalEarnings.percent }
+							movingUp={ this.state.totalEarnings.movingUp === true } />
 					</OverviewBoxes>
 
 					<div className="columns">
