@@ -210,7 +210,7 @@ export default class Home extends Component {
 									selected={this.state.garphOption} />
 							</div>
 
-							<canvas width="100%" height="280px" />
+							<canvas width="100%" height="280px" className="float-right" />
 						</div>
 					</div>
 
