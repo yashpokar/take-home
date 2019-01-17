@@ -23,11 +23,6 @@ import search from './../assets/images/Search Icon.svg';
 import messages from './../assets/images/Path 9.svg';
 import notify from './../assets/images/Notification Icon.svg';
 import avatar from './../assets/images/Avatar.png';
-import remove from './../assets/images/circle-remove.svg';
-import time from './../assets/images/time-countdown.svg';
-import process_ from './../assets/images/Process.svg';
-import alertCircle from './../assets/images/alert-circle-exc.svg';
-import newUserIcon from './../assets/images/New customer Icon.svg';
 
 export default class Home extends Component {
 	state = {
@@ -36,6 +31,7 @@ export default class Home extends Component {
 		garphOption: 1,
 		referrerData: [],
 		topProducts: [],
+		quickDetails: [],
 		totalViews: { value: '', percent: '', movingUp: false },
 		productsSold: { value: '', percent: '', movingUp: true },
 		totalEarnings: { value: '', percent: '', movingUp: false },
@@ -64,9 +60,9 @@ export default class Home extends Component {
 	componentDidMount () {
 		axios.get('https://take-home-rest.herokuapp.com/')
 			.then(({data}) => {
-				const { topProducts, referrer, cards, notifications } = data;
+				const { topProducts, referrer, cards, notifications, quickDetails } = data;
 
-				this.setState({ topProducts, referrerData: referrer, notifications, ...cards });
+				this.setState({ topProducts, referrerData: referrer, notifications, quickDetails, ...cards });
 			})
 			.catch(error => console.log(error))
 	}
@@ -281,35 +277,15 @@ export default class Home extends Component {
 							<span className="dashboard-card-title">Quick Details</span>
 
 							<ul className="quick-details">
-								<QuickDetail
-									bg="purple"
-									duration="Last 24 Hours"
-									about="290 New Customers"
-									image={ newUserIcon } />
+								{
+									this.state.quickDetails.map((quickDetail, i) => (
+										<QuickDetail
+											key={i}
+											{...quickDetail}
+											image={ require(quickDetail.image) } />
+									))
+								}
 
-								<QuickDetail
-									bg="green"
-									duration="Awaiting Process"
-									about="490 Orders"
-									image={ process_ } />
-
-								<QuickDetail
-									bg="pink"
-									duration="On Hold"
-									about="120 Orders"
-									image={ time } />
-
-								<QuickDetail
-									bg="orange"
-									duration="Low in Stock"
-									about="490 Orders"
-									image={ alertCircle } />
-
-								<QuickDetail
-									bg="red"
-									duration="Out of Stock"
-									about="42 Items"
-									image={ remove } />
 							</ul>
 						</div>
 					</div>
