@@ -23,6 +23,7 @@ import search from './../assets/images/Search Icon.svg';
 import messages from './../assets/images/Path 9.svg';
 import notify from './../assets/images/Notification Icon.svg';
 import avatar from './../assets/images/Avatar.png';
+import newUser from './../assets/images/New customer Icon.svg';
 
 export default class Home extends Component {
 	state = {
@@ -279,13 +280,9 @@ export default class Home extends Component {
 							<ul className="quick-details">
 								{
 									this.state.quickDetails.map((quickDetail, i) => (
-										<QuickDetail
-											key={i}
-											{...quickDetail}
-											image={ require(quickDetail.image) } />
+										<QuickDetail {...quickDetail} image={ newUser } key={i} />
 									))
 								}
-
 							</ul>
 						</div>
 					</div>
