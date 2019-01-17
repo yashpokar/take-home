@@ -118,7 +118,7 @@ export default class Home extends Component {
 
 							{
 								notifications.length ?
-								<div className={ `navigation__widgets-item__dropdown${ isNotificationOpen ? ' is-active' : '' }` }>
+								<div className={ `navigation__widgets-item__dropdown animated${ isNotificationOpen ? ' is-active flipInY' : ' flipOutY' }` }>
 									<span className="navigation__widgets-item__dropdown-title">Notifications</span>
 
 									<ul className="navigation__widgets-item__dropdown-menu">
