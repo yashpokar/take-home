@@ -6,6 +6,7 @@ import { Table, Column } from './../components/layouts/Table';
 import { OverviewBoxes, OverviewBox } from './../components/dashboard/OverviewBox';
 import { Country, Countries } from './../components/dashboard/Map';
 import Select from './../components/form/Select';
+import QuickDetail from './../components/dashboard/QuickDetail';
 
 import MapImage from './../assets/images/Map.svg';
 import home from './../assets/images/house.svg';
@@ -23,6 +24,11 @@ import avatar from './../assets/images/Avatar.png';
 import avatarOne from './../assets/images/avatar-1.png';
 import avatarSecond from './../assets/images/avatar-2.png';
 import avatarThird from './../assets/images/avatar-3.png';
+import remove from './../assets/images/circle-remove.svg';
+import time from './../assets/images/time-countdown.svg';
+import process_ from './../assets/images/Process.svg';
+import alertCircle from './../assets/images/alert-circle-exc.svg';
+import newUserIcon from './../assets/images/New customer Icon.svg';
 
 export default class Home extends Component {
 	state = {
@@ -285,7 +291,7 @@ export default class Home extends Component {
 							<span className="dashboard-card-title">Top Products</span>
 
 							<div className="dashboard-card-content">
-								<Table rows={this.state.topProducts}>
+								<Table rows={this.state.topProducts} hasMore>
 									<Column
 										name="product"
 										cell={ product =>
@@ -308,6 +314,42 @@ export default class Home extends Component {
 									<Column name="total" />
 								</Table>
 							</div>
+						</div>
+
+						<div className="column column--quarter bg-white box-shadow">
+							<span className="dashboard-card-title">Quick Details</span>
+
+							<ul className="quick-details">
+								<QuickDetail
+									bg="purple"
+									duration="Last 24 Hours"
+									about="290 New Customers"
+									image={ newUserIcon } />
+
+								<QuickDetail
+									bg="green"
+									duration="Awaiting Process"
+									about="490 Orders"
+									image={ process_ } />
+
+								<QuickDetail
+									bg="pink"
+									duration="On Hold"
+									about="120 Orders"
+									image={ time } />
+
+								<QuickDetail
+									bg="orange"
+									duration="Low in Stock"
+									about="490 Orders"
+									image={ alertCircle } />
+
+								<QuickDetail
+									bg="red"
+									duration="Out of Stock"
+									about="42 Items"
+									image={ remove } />
+							</ul>
 						</div>
 					</div>
 				</section>
