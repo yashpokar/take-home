@@ -34,6 +34,8 @@ export default class Home extends Component {
 		referrerData: [],
 		topProducts: [],
 		quickDetails: [],
+		firstChartData: [0, 0, 0, 0, 0, 0],
+		secondChartsData: [0, 0, 0, 0, 0, 0],
 		totalViews: { value: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: false },
 		productsSold: { value: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: true },
 		totalEarnings: { value: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: false },
@@ -51,13 +53,31 @@ export default class Home extends Component {
 		{ icon: support, name: 'Help Center', href: '/support' },
 	]
 
-	garphOptions = [
-		'Last 3 months',
-		'Last 6 months',
-		'Last 8 months',
-		'Last 12 months',
-		'Last 2 years',
-	]
+	garphOptions = {
+		3: 'Last 3 months',
+		6: 'Last 6 months',
+		8: 'Last 8 months',
+		12: 'Last 12 months',
+		24: 'Last 2 years',
+	}
+
+	askForChartsData () {
+		axios.get('https://take-home-rest.herokuapp.com/charts.php', { params: { duration: this.state.garphOption } })
+			.then(({data}) => {
+				const [firstChartData, secondChartsData] = data.statistics;
+
+				this.setState({ firstChartData, secondChartsData });
+			})
+			.catch(error => console.log(error));
+	}
+
+	onPeriodChange = (e) => {
+		const garphOption = e.target.value;
+
+		this.setState({ garphOption }, () => {
+			this.askForChartsData();
+		});
+	}
 
 	componentDidMount () {
 		axios.get('https://take-home-rest.herokuapp.com/')
@@ -67,6 +87,9 @@ export default class Home extends Component {
 				this.setState({ topProducts, referrerData: referrer, notifications, quickDetails, ...cards });
 			})
 			.catch(error => console.log(error));
+
+		// Load chart data initially
+		this.askForChartsData();
 	}
 
 	closeAllThePopovers = e => {
@@ -206,7 +229,7 @@ export default class Home extends Component {
 
 							<div className="float-right">
 								<Select
-									onChange={ (garphOption) => this.setState({ garphOption }) }
+									onChange={ this.onPeriodChange }
 									options={this.garphOptions}
 									defaultValue={this.state.garphOption} />
 							</div>
@@ -235,7 +258,7 @@ export default class Home extends Component {
 												pointHoverBorderWidth: 2,
 												pointRadius: 1,
 												pointHitRadius: 10,
-												data: [15, 9, 13, 18, 14, 23],
+												data: this.state.firstChartData,
 												index: 0,
 											},
 										    {
@@ -255,7 +278,7 @@ export default class Home extends Component {
 												pointHoverBorderWidth: 2,
 												pointRadius: 1,
 												pointHitRadius: 10,
-												data: [19, 6, 17, 13, 16, 10],
+												data: this.state.secondChartsData,
 												index: 1,
 											},
 										]
