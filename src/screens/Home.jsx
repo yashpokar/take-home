@@ -36,9 +36,9 @@ export default class Home extends Component {
 		quickDetails: [],
 		firstChartData: [0, 0, 0, 0, 0, 0],
 		secondChartsData: [0, 0, 0, 0, 0, 0],
-		totalViews: { value: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: false },
-		productsSold: { value: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: true },
-		totalEarnings: { value: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: false },
+		totalViews: { stat: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: false },
+		productsSold: { stat: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: true },
+		totalEarnings: { stat: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: false },
 	}
 
 	sidebarItems = [
@@ -66,7 +66,7 @@ export default class Home extends Component {
 			.then(({data}) => {
 				const [firstChartData, secondChartsData] = data.statistics;
 
-				this.setState({ firstChartData, secondChartsData });
+				this.setState({ firstChartData, secondChartsData, ...data.cards });
 			})
 			.catch(error => console.log(error));
 	}
@@ -82,9 +82,9 @@ export default class Home extends Component {
 	componentDidMount () {
 		axios.get('https://take-home-rest.herokuapp.com/')
 			.then(({data}) => {
-				const { topProducts, referrer, cards, notifications, quickDetails } = data;
+				const { topProducts, referrer, notifications, quickDetails } = data;
 
-				this.setState({ topProducts, referrerData: referrer, notifications, quickDetails, ...cards });
+				this.setState({ topProducts, referrerData: referrer, notifications, quickDetails });
 			})
 			.catch(error => console.log(error));
 
@@ -205,22 +205,14 @@ export default class Home extends Component {
 					<OverviewBoxes>
 						<OverviewBox
 							title="Total Views"
-							stat={ this.state.totalViews.value }
-							percent={ this.state.totalViews.percent }
-							data={ this.state.totalViews.data }
-							movingUp={ this.state.totalViews.movingUp === true } />
+							{ ...this.state.totalViews }
+							 />
 						<OverviewBox
 							title="Products Sold"
-							stat={ this.state.productsSold.value }
-							percent={ this.state.productsSold.percent }
-							data={ this.state.productsSold.data }
-							movingUp={ this.state.productsSold.movingUp === true } />
+							{ ...this.state.productsSold } />
 						<OverviewBox
 							title="Total Earnings"
-							stat={ this.state.totalEarnings.value }
-							percent={ this.state.totalEarnings.percent }
-							data={ this.state.totalEarnings.data }
-							movingUp={ this.state.totalEarnings.movingUp === true } />
+							{ ...this.state.totalEarnings } />
 					</OverviewBoxes>
 
 					<div className="columns">
