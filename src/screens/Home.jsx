@@ -36,9 +36,9 @@ export default class Home extends Component {
 		quickDetails: [],
 		firstChartData: [0, 0, 0, 0, 0, 0],
 		secondChartsData: [0, 0, 0, 0, 0, 0],
-		totalViews: { stat: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: false },
-		productsSold: { stat: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: true },
-		totalEarnings: { stat: '', percent: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], movingUp: false },
+		totalViews: { stat: '', percent: '', data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], movingUp: false },
+		productsSold: { stat: '', percent: '', data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], movingUp: true },
+		totalEarnings: { stat: '', percent: '', data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], movingUp: false },
 	}
 
 	sidebarItems = [
@@ -204,13 +204,16 @@ export default class Home extends Component {
 
 					<OverviewBoxes>
 						<OverviewBox
+							color="#8fe5fd"
 							title="Total Views"
 							{ ...this.state.totalViews }
 							 />
 						<OverviewBox
+							color="#bab8fc"
 							title="Products Sold"
 							{ ...this.state.productsSold } />
 						<OverviewBox
+							color="#8eeabc"
 							title="Total Earnings"
 							{ ...this.state.totalEarnings } />
 					</OverviewBoxes>
@@ -299,7 +302,7 @@ export default class Home extends Component {
 									        		min: 5,
 									        		max: 25,
 									        		stepSize: 5,
-									        		callback: (label, index, labels) => `${label}k`,
+									        		callback: (label, index, labels) => `$${label}k`,
 									        	}
 									        }]
 									    }
