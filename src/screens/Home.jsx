@@ -36,9 +36,9 @@ export default class Home extends Component {
 		quickDetails: [],
 		firstChartData: [0, 0, 0, 0, 0, 0],
 		secondChartsData: [0, 0, 0, 0, 0, 0],
-		totalViews: { stat: '', percent: '', data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], movingUp: false },
-		productsSold: { stat: '', percent: '', data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], movingUp: true },
-		totalEarnings: { stat: '', percent: '', data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], movingUp: false },
+		totalViews: { stat: '0', percent: '0%', data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], movingUp: true },
+		productsSold: { stat: '0', percent: '0%', data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], movingUp: true },
+		totalEarnings: { stat: '0', percent: '0%', data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], movingUp: true },
 	}
 
 	sidebarItems = [
